@@ -1,4 +1,4 @@
-from tkinter import ttk, StringVar, constants
+from tkinter import ttk, StringVar, PhotoImage
 from tkcalendar import Calendar
 import datetime
 
@@ -23,6 +23,12 @@ class MainPage:
 
         heading = ttk.Label(self.window, text="Suomenlinna Ferry Traffic Predictor", font=("Helvetica", 36))
         heading.grid(padx=5, pady=100)
+
+        """
+        image = PhotoImage(file="src/static/ferry-pic.png")
+        image_label = ttk.Label(self.window, image=image)    
+        image_label.grid()
+        """
 
         direction = ttk.Label(self.window, text="Direction", font=("Helvetica", 16))
         direction.grid(column=0, padx=5, pady=10)
