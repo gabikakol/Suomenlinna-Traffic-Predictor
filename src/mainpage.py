@@ -38,7 +38,7 @@ class MainPage:
         date.grid(column=0, padx=5, pady=10)
 
         #edit the funtion to set minimum date to current date
-        self.cal = Calendar(self.window, mindate=datetime.date.today(), maxdate=datetime.date(2025, 1, 1))
+        self.cal = Calendar(self.window, mindate=datetime.date.today(), maxdate=datetime.date(2026, 1, 1))
         self.cal.grid(padx=5, pady=10)
 
         time = ttk.Label(self.window, text="Time (full hour)", font=("Helvetica", 16))
