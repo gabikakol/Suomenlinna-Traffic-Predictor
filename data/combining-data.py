@@ -10,6 +10,9 @@ merge_keys = ['Year', 'Month', 'Day', 'Hour']
 # Merge the datasets on the common key values
 merged_data = pd.merge(hsl_data, weather_data, on=merge_keys, how='inner')
 
+for col in ['Average temperature', 'Wind speed', 'Precipitation']:
+    merged_data[col] = pd.to_numeric(merged_data[col], errors='coerce').fillna(0).astype(float)
+
 # Check the first few rows of the merged dataset
 print(merged_data.head())
 
