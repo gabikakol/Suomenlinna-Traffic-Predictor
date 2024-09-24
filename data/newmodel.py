@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 # Load the dataset
-df = pd.read_csv('data/combined-data.csv')
+df = pd.read_csv('~/data/Suomenlinna-Traffic-Predictor/data/combined-data.csv')
 
 # Select the independent variables (date and weather features)
 X = df[['Year', 'Month', 'Day', 'Average temperature', 'Wind speed', 'Precipitation']]  # Replace with actual column names
