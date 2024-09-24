@@ -7,8 +7,8 @@ from sklearn.metrics import mean_squared_error, r2_score
 # Load the dataset
 df = pd.read_csv('~/data/Suomenlinna-Traffic-Predictor/data/combined-data.csv')
 
-# Select the independent variables (date and weather features)
-X = df[['Year', 'Month', 'Day', 'Average temperature', 'Wind speed', 'Precipitation']]  # Replace with actual column names
+# Select the independent variables (date, hour, weather features, and direction)
+X = df[['Year', 'Month', 'Day', 'Hour', 'Average temperature', 'Wind speed', 'Precipitation', 'Stop']]  # Replace with actual column names
 
 # Select the dependent variable (ferry traffic)
 y = df['Passengers']  # Replace with actual column name for ferry traffic
@@ -32,10 +32,10 @@ r2 = r2_score(y_test, y_pred)
 print(f"Mean Squared Error: {mse}")
 print(f"R^2 Score: {r2}")
 
-# Function to predict ferry traffic based on input date and weather
-def predict_traffic(year, month, day, avg_temp, wind_speed, precipitation):
-    input_data = pd.DataFrame([[year, month, day, avg_temp, wind_speed, precipitation]], 
-                              columns=['Year', 'Month', 'Day', 'Average temperature', 'Wind speed', 'Precipitation'])
+# Function to predict ferry traffic based on input date, hour, weather, and direction
+def predict_traffic(year, month, day, hour, avg_temp, wind_speed, precipitation, stop):
+    input_data = pd.DataFrame([[year, month, day, hour, avg_temp, wind_speed, precipitation, stop]], 
+                              columns=['Year', 'Month', 'Day', 'Hour', 'Average temperature', 'Wind speed', 'Precipitation', 'Stop'])
     prediction = model.predict(input_data)
     return prediction[0]
 
@@ -43,9 +43,11 @@ def predict_traffic(year, month, day, avg_temp, wind_speed, precipitation):
 year = 2024
 month = 9
 day = 24
+hour = 14  # Example hour
 avg_temp = 15.0  # Example temperature
 wind_speed = 5.0  # Example wind speed
 precipitation = 0.0  # Example precipitation
+stop = 98  # Example direction
 
-predicted_traffic = predict_traffic(year, month, day, avg_temp, wind_speed, precipitation)
+predicted_traffic = predict_traffic(year, month, day, hour, avg_temp, wind_speed, precipitation, stop)
 print(f"Predicted ferry traffic: {predicted_traffic}")
