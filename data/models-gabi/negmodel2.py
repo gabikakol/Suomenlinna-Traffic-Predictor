@@ -6,7 +6,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 
 # Load the dataset
-df = pd.read_csv('~/datascience/Suomenlinna-Traffic-Predictor/data/combined-data.csv')
+df = pd.read_csv('data/combined-data.csv')
 
 # Select the independent variables (date, hour, weather features, and direction)
 X = df[['Year', 'Month', 'Day', 'Hour', 'Average temperature', 'Wind speed', 'Precipitation', 'Stop']]  # Replace with actual column names
