@@ -52,12 +52,12 @@ def predict_traffic(year, month, day, hour, avg_temp, wind_speed, precipitation,
 
 # Example usage
 year = 2025
-month = 5
-day = 15
-hour = 7  # Example hour
-avg_temp = 18.0  # Example temperature
-wind_speed = 5.0  # Example wind speed
-precipitation = 20.0  # Example precipitation
+month = 7
+day = 25
+hour = 15  # Example hour
+avg_temp = 22.0  # Example temperature
+wind_speed = 2.0  # Example wind speed
+precipitation = 18.0  # Example precipitation
 stop = 99  # Example direction
 
 predicted_traffic = predict_traffic(year, month, day, hour, avg_temp, wind_speed, precipitation, stop)
