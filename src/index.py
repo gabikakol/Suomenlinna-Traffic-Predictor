@@ -2,12 +2,12 @@ from tkinter import Tk
 from ui.ui import UI
 
 def main():
-    window = Tk()
-    window.title("Suomenlinna Ferry Traffic Predictor")
-    window.geometry("1200x1000")
-    UI(window)
+    root = Tk()
+    root.title("Suomenlinna Ferry Traffic Predictor")
+    root.geometry("1200x1000")
+    UI(root)
 
-    window.mainloop()
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
