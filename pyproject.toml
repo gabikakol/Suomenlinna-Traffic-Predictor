@@ -8,6 +8,7 @@ packages = [{include = "suomenlinna_traffic_predictor"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+invoke = "^2.0.0"
 
 
 [build-system]
