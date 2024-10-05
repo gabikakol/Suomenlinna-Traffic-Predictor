@@ -7,7 +7,9 @@ class MainPage:
     def __init__(self, root, resultpage_view):
         self._root = root
         self._window = None 
+
         self.resultpage_view = resultpage_view
+        
         self.start()
 
     def start(self):

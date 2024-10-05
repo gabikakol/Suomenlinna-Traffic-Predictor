@@ -1,4 +1,5 @@
 from tkinter import ttk, StringVar, constants
+#from data.negmodel2withclass import DataModel
 
 
 class ResultPage:
@@ -6,6 +7,14 @@ class ResultPage:
     def __init__(self, root, direction, date, time, temperature, wind, precipitation):
         self._root = root
         self.window = None
+
+        self.direction = direction
+        self.date = date
+        self.time = time
+        self.temperature = temperature
+        self.wind = wind
+        self.precipitation = precipitation
+
         self.start()
 
     def start(self):

@@ -2,6 +2,8 @@ from tkinter import Tk
 from ui.mainpage import MainPage
 from ui.resultpage import ResultPage
 
+from data.negmodel2withclass import DataModel
+
 
 class UI:
 
