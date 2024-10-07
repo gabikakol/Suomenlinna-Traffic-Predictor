@@ -20,7 +20,7 @@ class DataModel:
         self.precipitation = precipitation
         self.stop = stop
 
-        df = pd.read_csv('combined-data.csv')
+        df = pd.read_csv('data/combined-data.csv')
 
         X = df[['Year', 'Month', 'Day', 'Hour', 'Average temperature', 'Wind speed', 'Precipitation', 'Stop']] 
         y = df['Passengers']

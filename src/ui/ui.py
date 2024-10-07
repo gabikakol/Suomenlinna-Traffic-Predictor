@@ -1,9 +1,6 @@
 from tkinter import Tk
-from ui.mainpage import MainPage
-from ui.resultpage import ResultPage
-
-#from data.negmodel2withclass import DataModel
-
+from src.ui.mainpage import MainPage
+from src.ui.resultpage import ResultPage
 
 class UI:
 
@@ -26,4 +23,4 @@ class UI:
 
     def resultpage_view(self, direction, date, time, temperature, wind, precipitation):
         self.hide_current_view()
-        self._window = ResultPage(self._root, direction, date, time, temperature, wind, precipitation)
+        self._window = ResultPage(self._root, self.mainpage_view, direction, date, time, temperature, wind, precipitation)

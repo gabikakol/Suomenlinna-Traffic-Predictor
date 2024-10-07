@@ -4,5 +4,6 @@ import sys
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
-# Install tkcalendar
 install("tkcalendar")
+install("pandas")
+install("scikit-learn")
