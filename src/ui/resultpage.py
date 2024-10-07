@@ -1,4 +1,4 @@
-from tkinter import ttk, StringVar, constants
+from tkinter import ttk, StringVar, constants, PhotoImage
 from data.OPTIMIZEDnegmodel2withclass import DataModel
 
 
@@ -71,20 +71,15 @@ class ResultPage:
         self.prediction = self.model.predict_traffic()
 
         if self.prediction <= 80:
-            self.result = "NOT BUSY"
-            self.colour = "green"
+            self.image = PhotoImage(file="src/static/not-busy.png")
         elif self.prediction <= 160:
-            self.result = "MODERATELY BUSY"
-            self.colour = "yellow"
+            self.image = PhotoImage(file="src/static/moderately-busy.png")
         elif self.prediction <= 240:
-            self.result = "QUITE BUSY"
-            self.colour = "orange"
+            self.image = PhotoImage(file="src/static/quite-busy.png")
         elif self.prediction <= 320:
-            self.result = "VERY BUSY"
-            self.colour = "red"
+            self.image = PhotoImage(file="src/static/very-busy.png")
         else:
-            self.result = "EXTREMELY BUSY"
-            self.colour = "dark red"
+            self.image = PhotoImage(file="src/static/extremely-busy.png")
 
         self.show_result()
 
@@ -99,8 +94,11 @@ class ResultPage:
         heading2 = ttk.Label(self.window, text=f"Predicted ferry traffic:", font=("Helvetica", 16))
         heading2.grid(padx=5, pady=10)
 
-        result = ttk.Label(self.window, text=f"{self.result}", font=("Helvetica", 26, "bold"), foreground=self.colour)
-        result.grid(padx=5, pady=50)
+        """result = ttk.Label(self.window, text=f"{self.result}", font=("Helvetica", 26, "bold"), foreground=self.colour)
+        result.grid(padx=5, pady=50)"""
+
+        image_label = ttk.Label(self.window, image=self.image)
+        image_label.grid(column=0, padx=5, pady=20)
 
         heading3 = ttk.Label(self.window, text=f"Prediction made for the following parameters:", font=("Helvetica", 16))
         heading3.grid(padx=5, pady=20)

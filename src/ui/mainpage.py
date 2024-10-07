@@ -17,7 +17,7 @@ class MainPage:
         self._window = ttk.Frame(self._root)
         style = ttk.Style()
 
-        heading = ttk.Label(self._window, text="Suomenlinna Ferry Traffic Predictor", font=("Helvetica", 26))
+        heading = ttk.Label(self._window, text="Suomenlinna Ferry Traffic Predictor", font=("Franklin Gothic Book", 26))
         heading.grid(padx=5, pady=50)
 
         direction = ttk.Label(self._window, text="Direction", font=("Helvetica", 16))
