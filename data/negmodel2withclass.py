@@ -50,14 +50,3 @@ class DataModel:
         return prediction[0]
 
 
-
-    """
-    year = 2025
-    month = 7
-    day = 25
-    hour = 15  # Example hour
-    avg_temp = 22.0  # Example temperature
-    wind_speed = 2.0  # Example wind speed
-    precipitation = 18.0  # Example precipitation
-    stop = 99  
-    """
