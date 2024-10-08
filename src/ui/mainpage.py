@@ -1,4 +1,4 @@
-from tkinter import ttk, StringVar, Canvas, Scrollbar
+from tkinter import ttk, StringVar
 from tkcalendar import Calendar
 import datetime
 
@@ -14,21 +14,8 @@ class MainPage:
 
     def start(self):
 
-        self.container = ttk.Frame(self._root)
-        self.container.pack(expand=True, fill='both')
+        self._window = ttk.Frame(self._root)
         style = ttk.Style()
-
-        self.canvas = Canvas(self.container)
-        self.canvas.pack(side="left", fill="both", expand=True)
-
-        self.scrollbar = Scrollbar(self.container, orient="vertical", command=self.canvas.yview)
-        self.scrollbar.pack(side="right", fill="y")
-
-        self.canvas.configure(yscrollcommand=self.scrollbar.set)
-        self.canvas.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
-
-        self._window = ttk.Frame(self.canvas)
-        self.canvas.create_window((0, 0), window=self._window, anchor="nw")
 
         heading = ttk.Label(self._window, text="Suomenlinna Ferry Traffic Predictor", font=("Franklin Gothic Book", 26))
         heading.grid(padx=5, pady=50)
@@ -106,3 +93,4 @@ class MainPage:
         wind = self.wind_var.get()
         precipitation = self.rain_var.get()
         self.resultpage_view(direction, date, time, temperature, wind, precipitation)
+
