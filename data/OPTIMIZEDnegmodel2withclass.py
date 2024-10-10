@@ -8,8 +8,6 @@ import numpy as np
 class DataModel:
     def __init__(self, root, year, month, day, hour, avg_temp, wind_speed, precipitation, stop):
         self._root = root
-
-        # Input data attributes
         self.year = year
         self.month = month
         self.day = day
@@ -19,17 +17,15 @@ class DataModel:
         self.precipitation = precipitation
         self.stop = stop
 
-        # Load the data and prepare it only once
         self.df = None
         self.model = None
         self.scaler = None
         self.mse = None
         self.r2 = None
 
-        # Load data and train model lazily
-        self.load_and_train_model()
+        self.predict_traffic()
 
-    def load_and_train_model(self):
+    def predict_traffic(self):
         # Load data once and cache it
         if self.df is None:
             self.df = pd.read_csv('data/combined-data.csv')
@@ -58,15 +54,12 @@ class DataModel:
         self.r2 = r2_score(y_test, y_pred)
 
     def predict_traffic(self):
-        # Create input data frame
         input_data = pd.DataFrame([[self.year, self.month, self.day, self.hour, self.avg_temp, self.wind_speed, self.precipitation, self.stop]],
                                   columns=['Year', 'Month', 'Day', 'Hour', 'Average temperature', 'Wind speed', 'Precipitation', 'Stop'])
 
-        # Scale the input data
         input_data_scaled = self.scaler.transform(input_data)
 
-        # Make prediction
         prediction = self.model.predict(input_data_scaled)
-        prediction = np.maximum(prediction, 0)  # Ensure no negative predictions
+        prediction = np.maximum(prediction, 0)
 
         return prediction[0]

@@ -7,3 +7,5 @@ def install(package):
 install("tkcalendar")
 install("pandas")
 install("scikit-learn")
+install("numpy")
+install("tk")
