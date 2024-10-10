@@ -14,7 +14,7 @@ class UI:
             self._root.destroy()
             self._root = Tk()
             self._root.title("Suomenlinna Ferry Traffic Predictor")
-            self._root.geometry("1200x1000")
+            self._root.geometry("1000x1000")
             self._window = None
 
     def mainpage_view(self):

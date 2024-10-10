@@ -49,4 +49,3 @@ class DataModel:
         prediction = np.maximum(prediction, 0)
         return prediction[0]
 
-

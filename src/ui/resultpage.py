@@ -1,6 +1,5 @@
-from tkinter import ttk, StringVar, constants, PhotoImage
+from tkinter import ttk, StringVar, constants, PhotoImage, Canvas, Scrollbar
 from data.OPTIMIZEDnegmodel2withclass import DataModel
-
 
 class ResultPage:
 
@@ -65,8 +64,6 @@ class ResultPage:
         self.start()
 
     def start(self):
-            
-            
         self.model = DataModel(self._root, self.year, self.month, self.day, self.time, self.temperature, self.wind, self.precipitation, self.direction)
         self.prediction = self.model.predict_traffic()
 
@@ -85,46 +82,49 @@ class ResultPage:
 
     def show_result(self):
 
-        self.window = ttk.Frame(self._root)
-        style = ttk.Style()
+        canvas = Canvas(self._root)
+        scrollbar = Scrollbar(self._root, orient="vertical", command=canvas.yview)
+        scrollable_frame = ttk.Frame(canvas)
 
-        heading = ttk.Label(self.window, text="Suomenlinna Ferry Traffic Predictor", font=("Helvetica", 26))
-        heading.grid(padx=5, pady=50)
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
 
-        heading2 = ttk.Label(self.window, text=f"Predicted ferry traffic:", font=("Helvetica", 16))
-        heading2.grid(padx=5, pady=10)
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
 
-        """result = ttk.Label(self.window, text=f"{self.result}", font=("Helvetica", 26, "bold"), foreground=self.colour)
-        result.grid(padx=5, pady=50)"""
+        heading = ttk.Label(scrollable_frame, text="Suomenlinna Ferry Traffic Predictor", font=("Helvetica", 26))
+        heading.grid(row=0, column=0, padx=5, pady=50)
 
-        image_label = ttk.Label(self.window, image=self.image)
-        image_label.grid(column=0, padx=5, pady=20)
+        heading2 = ttk.Label(scrollable_frame, text=f"Predicted ferry traffic:", font=("Helvetica", 16))
+        heading2.grid(row=1, column=0, padx=5, pady=10)
 
-        heading3 = ttk.Label(self.window, text=f"Prediction made for the following parameters:", font=("Helvetica", 16))
-        heading3.grid(padx=5, pady=20)
+        image_label = ttk.Label(scrollable_frame, image=self.image)
+        image_label.grid(row=2, column=0, padx=130, pady=20)
 
-        date = ttk.Label(self.window, text=f"Date: {self.date}", font=("Helvetica", 12))
-        date.grid(padx=5, pady=10)
+        heading3 = ttk.Label(scrollable_frame, text=f"Prediction made for the following parameters:", font=("Helvetica", 16))
+        heading3.grid(row=3, column=0, padx=5, pady=20)
 
-        time = ttk.Label(self.window, text=f"Hour: {self.time}:00", font=("Helvetica", 12))
-        time.grid(padx=5, pady=10)
+        date = ttk.Label(scrollable_frame, text=f"Date: {self.date}", font=("Helvetica", 12))
+        date.grid(row=4, column=0, padx=5, pady=10)
 
-        temp = ttk.Label(self.window, text=f"Predicted temperature: {self.temperature_og}", font=("Helvetica", 12))
-        temp.grid(padx=5, pady=10)
+        time = ttk.Label(scrollable_frame, text=f"Hour: {self.time}:00", font=("Helvetica", 12))
+        time.grid(row=5, column=0, padx=5, pady=10)
 
-        wind = ttk.Label(self.window, text=f"Predicted wind: {self.wind_og}", font=("Helvetica", 12))
-        wind.grid(padx=5, pady=10)
+        temp = ttk.Label(scrollable_frame, text=f"Predicted temperature: {self.temperature_og}", font=("Helvetica", 12))
+        temp.grid(row=6, column=0, padx=5, pady=10)
 
-        precipitation = ttk.Label(self.window, text=f"Predicted precipitation: {self.precipitation_og}", font=("Helvetica", 12))
-        precipitation.grid(padx=5, pady=10)
+        wind = ttk.Label(scrollable_frame, text=f"Predicted wind: {self.wind_og}", font=("Helvetica", 12))
+        wind.grid(row=7, column=0, padx=5, pady=10)
 
-        back_button = ttk.Button(self.window, command=self.mainpage_view, text="Make another prediction")
-        back_button.grid(column=0, padx=5, pady=50)
+        precipitation = ttk.Label(scrollable_frame, text=f"Predicted precipitation: {self.precipitation_og}", font=("Helvetica", 12))
+        precipitation.grid(row=8, column=0, padx=5, pady=10)
 
-        self.window.pack()
+        back_button = ttk.Button(scrollable_frame, command=self.mainpage_view, text="Make another prediction")
+        back_button.grid(row=9, column=0, padx=5, pady=50)
 
-        
+        scrollable_frame.columnconfigure(0, weight=1)
 
-    
-
-    
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
