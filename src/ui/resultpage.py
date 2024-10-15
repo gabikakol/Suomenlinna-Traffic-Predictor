@@ -1,5 +1,5 @@
 from tkinter import ttk, StringVar, constants, PhotoImage, Canvas, Scrollbar
-from data.OPTIMIZEDnegmodel2withclass import DataModel
+from data.model import DataModel
 
 class ResultPage:
 

@@ -1,35 +1,61 @@
-# Import necessary libraries
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
+import numpy as np
 
-# Assuming your merged ferry traffic and weather dataset is in 'data'
-# 'data' is a DataFrame with the columns 'temperature', 'wind_speed', 'precipitation', 'ferry_traffic', etc.
+class DataModel:
+    def __init__(self, root, year, month, day, hour, avg_temp, wind_speed, precipitation, stop):
+        self._root = root
 
-df = pd.read_csv('data/combined-data.csv')
+        self.year = year
+        self.month = month
+        self.day = day
+        self.hour = hour
+        self.avg_temp = avg_temp
+        self.wind_speed = wind_speed
+        self.precipitation = precipitation
+        self.stop = stop
 
-# Select the independent variables (weather features)
-X = df[['Year', 'Month', 'Day', 'Hour', 'Average temperature', 'Wind speed', 'Precipitation']]  # Replace with actual column names
+        self.df = None
+        self.model = None
+        self.scaler = None
+        self.mse = None
+        self.r2 = None
 
-# Select the dependent variable (ferry traffic)
-y = df[['Year', 'Month', 'Day', 'Hour', 'Passengers']]  # Replace with actual column name for ferry traffic
+        self.load_and_train_model()
 
-# Split the data into training and testing sets (80% training, 20% testing)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    def load_and_train_model(self):
+        if self.df is None:
+            self.df = pd.read_csv('data/combined-data.csv')
 
-# Create a Linear Regression model
-model = LinearRegression()
+        X = self.df[['Year', 'Month', 'Day', 'Hour', 'Average temperature', 'Wind speed', 'Precipitation', 'Stop']]
+        y = self.df['Passengers']
 
-# Fit the model on the training data
-model.fit(X_train, y_train) 
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Make predictions on the testing data
-y_pred = model.predict(X_test)
+        self.scaler = StandardScaler()
+        X_train_scaled = self.scaler.fit_transform(X_train)
+        X_test_scaled = self.scaler.transform(X_test)
 
-# Evaluate the model performance
-mse = mean_squared_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
+        if self.model is None:
+            self.model = RandomForestRegressor(n_estimators=50, n_jobs=-1, random_state=42)
+            self.model.fit(X_train_scaled, y_train)
 
-print(f"Mean Squared Error: {mse}")
-print(f"R^2 Score: {r2}")
+        y_pred = self.model.predict(X_test_scaled)
+        y_pred = np.maximum(y_pred, 0) 
+
+        self.mse = mean_squared_error(y_test, y_pred)
+        self.r2 = r2_score(y_test, y_pred)
+
+    def predict_traffic(self):
+        input_data = pd.DataFrame([[self.year, self.month, self.day, self.hour, self.avg_temp, self.wind_speed, self.precipitation, self.stop]],
+                                  columns=['Year', 'Month', 'Day', 'Hour', 'Average temperature', 'Wind speed', 'Precipitation', 'Stop'])
+
+        input_data_scaled = self.scaler.transform(input_data)
+
+        prediction = self.model.predict(input_data_scaled)
+        prediction = np.maximum(prediction, 0)
+
+        return prediction[0]
