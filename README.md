@@ -14,7 +14,7 @@ This repository contains the following sections:
 3. The code for application
 4. The final HSL Suomenlinna Ferry Predictor technical report
 
-## Instalation of the Program
+## Installation of the Program
 
 Run the following commands in `~/Suomenlinna-Traffic-Predictor`
 
